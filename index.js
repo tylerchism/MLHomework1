@@ -1,4 +1,4 @@
-const classifier = knnClassifier.create();
+// const classifier = knnClassifier.create();
 
 const webcamElement = document.getElementById('webcam');
 
@@ -13,7 +13,16 @@ async function app() {
     console.log('Successfully loaded model');
 
     await setupWebcam();
-    // Reads an image from the webcam and associates it with a specific class
+    while (true) {
+      const result = await net.classify(webcamElement);
+  
+      document.getElementById('console').innerText = `
+        prediction: ${result[0].className}\n
+        probability: ${result[0].probability}
+      `;
+ 
+ 
+ /*   // Reads an image from the webcam and associates it with a specific class
   // index.
   const addExample = classId => {
     // Get the intermediate activation of MobileNet 'conv_preds' and pass that
@@ -42,7 +51,7 @@ async function app() {
         probability: ${result.confidences[result.classIndex]}
       `;
     }
-
+*/
     await tf.nextFrame();
   }
 }
